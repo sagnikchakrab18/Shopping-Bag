@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Shopping Bag Application</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+	<style>
+		.card {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+			max-width: 300px;
+			margin: auto;
+			text-align: center;
+			font-family: arial;
+			transition: all .1s ease-in-out;
+		}
+		
+		.price {
+			color: grey;
+			font-size: 22px;
+		}
+		
+		.card:hover {
+			box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+			transform: translate3d(0px, -1px, 0px);
+		}
+		
+		.card img {
+			height: 235px;
+			width: 100%;
+		}
+		
+		.no_of_input {
+			width: 20%;
+			height: 35px;
+			text-align: center;
+			margin-top: -2px;
+		}
+		
+		.add_item_btn {
+			width: 75%;
+			height: 35px;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			background-color: #000;
+			text-align: center;
+			cursor: pointer;
+			font-size: 18px;
+		}
+		
+		.add_item_btn:hover {
+			color: seagreen;
+		}
+		
+		.coupon {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+			max-width: 300px;
+			margin: auto;
+			text-align: center;
+			font-family: arial;
+			transition: all .1s ease-in-out;
+		}
+		
+		.coupon:hover {
+			box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+			transform: translate3d(0px, -1px, 0px);
+		}
+		
+		.coupon img {
+			height: 100px;
+			width: 100%;
+		}
+		
+		.coupon button {
+			border: none;
+			outline: 0;
+			padding: 12px;
+			color: white;
+			background-color: #000;
+			text-align: center;
+			cursor: pointer;
+			width: 100%;
+			font-size: 18px;
+		}
+		
+		.coupon button:hover {
+			opacity: 0.7;
+		}
+		
+		.coupon_value {
+			width: 100%;
+			text-align: center;
+			border: none;
+			background-color: white;
+			outline: none;
+			color: #006624;
+			font-weight: bold;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!--<div class="jumbotron text-center">
+		<div class="container">
+			<!--<h1><strong>Shoppers Shop</strong></h1>   ~~block this only-->
+			<!--<h1 font-style = "oblique"><strong>art'smart</strong></h1>
+			&nbsp;
+			<p>
+				<h2>Join art'smart. Get best deals.</h2>
+			</p>
+		</div>
+	</div>-->
+	<div class="jumbotron text-center" style="background: url(index1.jpg) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; opacity: 1.8;">
+			<div class="container">
+			<!--<h1><strong>Shoppers Shop</strong></h1>   ~~block this only-->
+			<h1 font-style = "oblique"><strong>art'smart</strong></h1>
+			&nbsp;
+			<p>
+				<h2>Join art'smart. Get best deals.</h2>
+			</p>
+		</div>
+	</div>
+
+
+
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~NAVBAR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+	<nav class="navbar navbar-inverse bg-dark navbar-dark">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>                        
+	  </button>
+				<a class="navbar-brand" href="#">Shoppers Shop</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Products<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Electronic Products</a></li>
+							<li><a href="#">Food Products</a></li>
+							<li><a href="#">Footwears</a></li>
+							<li><a href="#">Accessories</a></li>
+						</ul>
+					</li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Gallery</a></li>
+				</ul>
+				<form class="navbar-form navbar-left" action="/action_page.php">
+
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search" name="search">
+						<div class="input-group-btn">
+							<button class="btn btn-default" type="submit">
+			<i class="glyphicon glyphicon-search"></i>
+		  </button>
+						</div>
+					</div>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+
+					<div class="btn-group">
+						<a href="#" class="btn btn-info" id="cart" data-toggle="modal" data-target="#cartModal">
+							<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+						</a>
+						<button id="count" name="count" class="btn btn-info">0</button>
+					</div>
+
+
+
+					<button type="button" class="btn btn-primary" id="ready" data-toggle="modal" data-target="#loginModal">Ready to Shop</button>
+					<!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+
+
+	<!--==========================
+
+		Cart modal start
+
+	============================-->
+
+	<div id="cartModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class='col-12 modal-title text-center'>Your Cart</h2>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<!--<form class="contactForm">-->
+<!--=========================================================== Show/Hide the added items on request ==============================================================-->
+					<h3>Selected items :: </h3>
+					<div id="totalitems">
+					</div>
+					<h3 id="totalbill">Total amount :: $0.00</h3>
+					<input type="password" name="usercoupon" id="usercoupon" placeholder="Enter Coupon Code" onkeydown="couponenter()" onkeyup="couponenter()" maxlength="20" class="form-control" data-rule="minlen:6" data-msg="Password must be at least 6 character..." required style="margin-bottom:5px;" />
+					<div id="where_to_add_msg"></div><br>
+					<div class="btn-group">
+						<input type="submit" id="applyCoupon" name="Apply" value="Apply" class="btn btn-info" disabled onclick="verifyCoupon()" />
+						<button type="reset" name="reset" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span></button>
+					</div>
+					<!--<input type="button" name="create_user" value="Create User" class="btn btn-info" data-toggle="modal" data-target="#forgotPassword" data-dismiss="modal" />-->
+					<span data-toggle="modal" data-target="#couponModal" style="text-decoration: underline; cursor: pointer;" data-dismiss="modal">View Coupons?</span>
+					<!--</form>-->
+
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#RegisterModal" data-dismiss="modal">Register</button>
+
+					<button type="button" class="btn btn-info" data-dismiss="modal">Add more</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<!--==========================
+
+		Cart modal end
+
+	============================-->
+
+
+
+
+
+
+	<!--==========================
+
+		coupon modal start
+
+	============================-->
+
+	<div id="couponModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class='col-12 modal-title text-center'>Magnificient Coupons</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+<!--============================================================== list the coupons ==========================================================================-->
+					<div class="row">
+						<div class="col-md-3">
+							<div class="coupon">
+								<img src="lion1.jpg" alt="Denim Jeans" style="width:100%">
+								<h1>50% OFF</h1>
+								<!--<p class="price"></p>
+							<p id="coupon1">DROOL50</p>-->
+								<input type="text" value="DROOL50" class="coupon_value" id="coupon1" disabled>
+								<p><button id="c1" onclick="copyFunction(1)">Copy</button></p>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="coupon">
+								<img src="lion1.jpg" alt="Denim Jeans" style="width:100%">
+								<h1>40% OFF</h1>
+								<!--<p class="price"></p>-->
+								<input type="text" value="DROOL40" class="coupon_value" id="coupon2" disabled>
+								<p><button id="c2" onclick="copyFunction(2)">Copy</button></p>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="coupon">
+								<img src="lion1.jpg" alt="Denim Jeans" style="width:100%">
+								<h1>20% OFF</h1>
+								<input type="text" value="DROOL20" class="coupon_value" id="coupon3" disabled>
+								<p><button id="c3" onclick="copyFunction(3)">Copy</button></p>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="coupon">
+								<img src="lion1.jpg" alt="Denim Jeans" style="width:100%">
+								<h1>10% OFF</h1>
+								<input type="text" value="DROOL10" class="coupon_value" id="coupon4" disabled> <!--use only 1 coupon---->
+								<p><button id="c4" onclick="copyFunction(4)">Copy</button></p>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#cartModal" data-dismiss="modal">Back to Cart</button>
+
+					<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!--==========================
+
+		coupon modal end
+
+	============================-->
+
+
+
+
+
+
+
+
+	<!--==========================
+
+		Login modal start
+
+	============================-->
+
+	<div id="loginModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class='col-12 modal-title text-center'>User Login</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<!--<form class="contactForm">-->
+					<input type="email" name="lemail" id="lg_email" placeholder="Email" maxlength="60" class="form-control" required style="margin-bottom:5px;" />
+					<input type="password" name="lpwd" id="lg_pwd" placeholder="Password" maxlength="20" class="form-control" data-rule="minlen:6" data-msg="Password must be at least 6 character..." required style="margin-bottom:5px;" />
+					<div class="btn-group">
+						<input type="submit" name="loginsubmit" value="Login" class="btn btn-info" onclick="dologin()" />
+						<button type="reset" name="reset" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span></button>
+					</div>
+					<!--<input type="button" name="create_user" value="Create User" class="btn btn-info" data-toggle="modal" data-target="#forgotPassword" data-dismiss="modal" />-->
+					<span data-toggle="modal" data-target="#forgotPassword" data-dismiss="modal">Forgot password?</span>
+					<!--</form>-->
+
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#RegisterModal" data-dismiss="modal">Register</button>
+
+					<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<!--==========================
+
+		Login modal end
+
+	============================-->
+
+	<!--==========================
+
+		forgotPassword modal start
+
+	============================-->
+
+	<div id="forgotPassword" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class='col-12 modal-title text-center'>Forgot Password</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<form class="contactForm">
+						<input type="email" name="email" id="fp_email" placeholder="Email" maxlength="60" class="form-control" required style="margin-bottom:5px;" />
+
+						<div class="btn-group">
+							<input type="submit" name="submit" onClick="sendOTP()" value="Send OTP" class="btn btn-info" />
+							<button type="reset" name="reset" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span></button>
+						</div>
+						<input type="button" name="create_user" value="Login" class="btn btn-info" data-toggle="modal" data-target="#loginModal" data-dismiss="modal" />
+					</form>
+
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#RegisterModal" data-dismiss="modal">Register</button>
+
+					<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!--==========================
+
+		forgotPassword modal end
+
+	============================-->
+
+	<!--==========================
+
+		Register modal start
+
+	============================-->
+
+	<div id="RegisterModal" class="modal fade" role="dialog">
+		<!Check method POST>
+
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+
+				<div class="modal-header">
+
+					<h4 class='col-12 modal-title text-center'>Register</h4>
+
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				</div>
+
+				<div class="modal-body">
+
+					<!--Register to write in my diary...-->
+
+					<form class="contactForm">
+
+						<input type="text" name="fname" id="fname" placeholder="First Name" maxlength="20" class="form-control" required style="margin-bottom:5px;" />
+
+						<input type="text" name="lname" id="lname" placeholder="Last Name" maxlength="20" class="form-control" required style="margin-bottom:5px;" />
+						<input type="date" id="dob" name="bday" required style="margin-bottom:5px;" /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						<input type="radio" id="gm" name="gender" value="m" required>Male
+						<input type="radio" id="gf" name="gender" value="f" required>Female
+						<input type="radio" id="go" name="gender" value="o" required>Others
+						<input type="email" name="email" id="reg_email" placeholder="Email" maxlength="60" class="form-control" required style="margin-bottom:5px;" />
+						<input type="password" name="pwd" id="reg_pwd" placeholder="Password" maxlength="20" class="form-control" data-rule="minlen:6" data-msg="Password must be at least 6 character..." required style="margin-bottom:5px;" />
+						<input type="password" name="cpwd" id="creg_pwd" placeholder="Confirm Password" maxlength="20" class="form-control" data-rule="minlen:6" data-msg="Password must be at least 6 character..." required style="margin-bottom:5px;" onblur="pwdFunction()" />
+
+						<div class="btn-group">
+
+							<input type="button" id="rg_submit" name="submit" value="Register" class="btn btn-info" onClick="doRegister()" disabled />
+
+							<button type="reset" name="reset" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span></button>
+
+						</div>
+
+					</form>
+
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">User Login</button>
+
+					<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!--==========================
+
+		Register modal end
+
+	============================-->
+
+<!--======================================================== List the Products =================================================================-->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="col-md-3">
+					<!-- <div class="thumbnail">
+		  		 <img src="diary.jpg" class="img-rounded" alt="works" style="width:100%; height: 100px">-->
+					<div class="card">
+						<img src="perf5.jpg" alt="EAU DE PARFUM" style="width:100%">
+						<h1 id="product1">DE PARFUM</h1>
+						<p id="price1" class="price">$9.99</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p>
+				<div class="input-group">
+						<input id="i1" type="number" class="form-control" value="1" min="1" />
+						<div class="input-group-btn">
+		 				 <button class="btn " id="1" name="1" value="Add to Cart" onclick="addCart(1)">
+						Add to Cart
+		  				</button>
+						</div>
+	 				 </div>
+			</p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(1)" onkeydown="myFunction(1)" id="i1" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="1" name="1" onclick="addCart(1)">Add to Cart</button>
+						</p>
+						<!----<button id="1" name="1" value="Add to Cart" onclick="addCart(1)">Add to Cart</button>------>
+
+
+
+					</div>
+					<!--</div>-->
+				</div>
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="wood2.jpeg" alt="Wodden Box" style="width:100%">
+						<h1 id="product2">Wodden Box</h1>
+						<p id="price2" class="price">$13.76</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--make the black and change text to "added to cart" 
+  			<p><button id="cart2" name="cart2" value="Add to Cart" onclick="addCart(cart2)">Add to Cart</button></p>
+			<input type="button" id="cart2" name="cart2" value="Add to Cart" class="card button" onclick="addCart()" />
+			<p><button id="2" name="2" value="Add to Cart" onclick="addCart(2)">Add to Cart</button></p>
+			
+			<p><div class="input-group">
+					<input id="i2" type="number" class="form-control" value="1" min="1" />
+					<div class="input-group-btn">
+		 				<button class="btn " id="2" name="2" value="Add to Cart" onclick="addCart(2)">Add to Cart</button>
+					</div>
+	 			</div></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(2)" onkeydown="myFunction(2)" id="i2" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="2" name="2" onclick="addCart(2)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="floral3.jpeg" alt="Denim Jeans" style="width:100%">
+						<h1 id="product3">Floral Fantasy</h1>
+						<p id="price3" class="price">$10.01</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p><button id="3" name="3" value="Add to Cart" onclick="addCart(3)">Add to Cart</button></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(3)" onkeydown="myFunction(3)" id="i3" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="3" name="3" onclick="addCart(3)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="pot1.jpg" alt="Tea pots" style="width:100%">
+						<h1 id="product4">Fancy Teapot</h1>
+						<p id="price4" class="price">$25.13</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p><button id="4" name="4" value="Add to Cart" onclick="addCart(4)">Add to Cart</button></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(4)" onkeydown="myFunction(4)" id="i4" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="4" name="4" onclick="addCart(4)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+				<!--~~~~~~~~~~~~~~~~2nd Row~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="pillow2.jpg" alt="Pillows" style="width:100%">
+						<h1 id="product5">Handy Pillows</h1>
+						<p id="price5" class="price">$19.99</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p><button id="5" name="5" value="Add to Cart" onclick="addCart(5)">Add to Cart</button></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(5)" onkeydown="myFunction(5)" id="i5" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="5" name="5" onclick="addCart(5)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="tintin1.jpg" alt="Tintin Comics" style="width:100%">
+						<h1 id="product6">Tintin Comics</h1>
+						<p id="price6" class="price">$11.23</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p><button id="6" name="6" value="Add to Cart" onclick="addCart(6)">Add to Cart</button></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(6)" onkeydown="myFunction(6)" id="i6" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="6" name="6" onclick="addCart(6)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="tiger1.jpg" alt="Photo Frame" style="width:100%">
+						<h1 id="product7">Wall Frames</h1>
+						<p id="price7" class="price">$29.99</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p><button id="7" name="7" value="Add to Cart" onclick="addCart(7)">Add to Cart</button></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(7)" onkeydown="myFunction(7)" id="i7" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="7" name="7" onclick="addCart(7)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card">
+						<img src="choco1.jpg" alt="Dark Chocolate" style="width:100%">
+						<h1 id="product8">Dark Chocolate</h1>
+						<p id="price8" class="price">$19.99</p>
+						<p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+						<!--<p><button id="8" name="8" value="Add to Cart" onclick="addCart(8)" ondblclick="myFunction()">Add to Cart</button></p>-->
+						<p>
+							<input type="number" class="no_of_input" onkeyup="myFunction(8)" onkeydown="myFunction(8)" id="i8" value="1" min="1" />
+							<button type="submit" class="add_item_btn" id="8" name="8" onclick="addCart(8)">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+		var bill = 0;
+		var ultimateBill;
+		var couponBill = 0;
+		var y = document.getElementById("count").value;
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Add to cart~~&~~Remove from Cart~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Adding the products  increase the bill amount~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Removing products should decrease the bill amount~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+		function addCart(x) {
+			var n;
+			var price = document.getElementById("price" + x).innerHTML;
+			var res = parseFloat(price.substring(1));
+			var noofelement = parseFloat(document.getElementById("i" + x).value);
+			var item = document.getElementById("product" + x).innerHTML;
+			var old_total_items = document.getElementById("totalitems").innerHTML;
+			var new_total_items = "";
+
+			if (document.getElementById(x).style.color == "green") {
+				n = 1;
+			} else {
+				n = 0;
+			}
+
+			if (n == 0) {
+				n++;
+				y++;
+				bill = bill + (res * noofelement);
+				ultimateBill = bill;
+				couponBill = bill;
+				document.getElementById(x).innerHTML = "Remove from cart";
+				document.getElementById(x).style.color = "green";
+				document.getElementById("count").innerHTML = y;
+				window.alert("Congrats. Item added Successfully!");
+			} else if (n == 1) {
+				n--;
+				document.getElementById(x).innerHTML = "Add to Cart";
+				document.getElementById(x).style.color = "white";
+				if (y >= 0) {
+					y--;
+					bill = bill - (res * noofelement);
+					ultimateBill = bill;
+					couponBill = bill;
+					document.getElementById("count").innerHTML = y;
+					window.alert("You've removed the Item!");
+				}
+			}
+
+			var item_array = old_total_items.split("<br>"); //there is nothing in old_total_items 1st time
+			var flag = 0;
+			var temp_item;
+			for (var i = 0; i < item_array.length - 1; i++) {
+				if (item_array[i].substring(0, item.length) == item)
+					flag = 1;
+				else
+					new_total_items = new_total_items + item_array[i] + "<br>"
+					//window.alert(item_array[i]);
+			}
+			if (flag == 0) {
+				new_total_items = new_total_items + item + " x" + noofelement + "<br>"
+			}
+
+			document.getElementById("totalitems").innerHTML = new_total_items;
+			document.getElementById("totalbill").innerHTML = "Total Bill :: $" + bill.toFixed(2);
+		}
+
+		/*function myFunction() {
+			document.getElementById("8").innerHTML = "Hello World";
+		}*/
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~*~~~~~Copy Coupon Code~~~~~~*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		
+		function copyFunction(c) {
+			/* var copyText = document.getElementById("coupon"+c).innerHTML;
+			 copyText.select();
+			 copyText.setSelectionRange(0, 99999);//for mobile
+			 document.execCommand("copy");
+			 alert("Copied the text: " + copyText.value);*/
+			 var s;
+			var copyText = document.getElementById("coupon" + c);
+			if(document.getElementById("c1").innerHTML == "Copied"  || document.getElementById("c2").innerHTML == "Copied"  || document.getElementById("c3").innerHTML == "Copied"  || document.getElementById("c4").innerHTML == "Copied"){
+				s = 1;
+			} else {
+				s = 0;
+			}
+			if(s == 0){
+				$(copyText).prop("disabled", false);
+				copyText.select();
+				document.execCommand("copy"); 
+				var sel = document.getSelection();
+				sel.removeAllRanges();
+				document.getElementById("c" + c).innerHTML = "Copied";
+				document.getElementById("c" + c).style.color = "green";
+				$(copyText).prop("disabled", true);
+			}
+		}
+
+		function couponenter()
+		{
+			console.log("called");
+			var userInput = document.getElementById("usercoupon").value;
+			if(userInput == "")
+				document.getElementById("applyCoupon").disabled = true;
+			else
+				document.getElementById("applyCoupon").disabled = false;
+		}
+		//~~~~~~~~~~~~~~~~~~~~~~~~~*~~~~~Apply Coupon Code & Decrease bill amount with coupon~~~~~~*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		//~~~~~~~~~~~~~~~~~~~~~~~~~*~~~~~Remove Coupon Code & Back to previous bill~~~~~~*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		function verifyCoupon(){
+			var userInput = document.getElementById("usercoupon").value;
+			var updatedBill;
+			var p;
+			//window.alert(userInput);
+			if(couponBill == 0)
+			{
+				alert("you can't apply coupon; add some item to cart.");
+				return;
+			}
+			if (document.getElementById("applyCoupon").style.color == "black") {
+				p = 1;
+			} else {
+				p = 0;
+			}
+			
+			if(p == 0){
+				document.getElementById("applyCoupon").value = "Remove Coupon";
+				document.getElementById("applyCoupon").style.color = "black";
+				if(userInput == "DROOL50"){
+					document.getElementById("where_to_add_msg").innerHTML="Coupon applied successfully";
+					document.getElementById("where_to_add_msg").style.color = "green";
+					updatedBill = couponBill - (couponBill*0.5);
+				} else if(userInput == "DROOL40"){
+					document.getElementById("where_to_add_msg").innerHTML="Coupon applied successfully";
+					document.getElementById("where_to_add_msg").style.color = "green";
+					updatedBill = couponBill - (couponBill*0.4);
+				} else if(userInput == "DROOL20"){
+					document.getElementById("where_to_add_msg").innerHTML="Coupon applied successfully";
+					document.getElementById("where_to_add_msg").style.color = "green";
+					updatedBill = couponBill - (couponBill*0.2);
+				} else if(userInput == "DROOL10"){
+					document.getElementById("where_to_add_msg").innerHTML="Coupon applied successfully";
+					document.getElementById("where_to_add_msg").style.color = "green";
+					updatedBill = couponBill - (couponBill*0.1);
+				} else{
+					updatedBill = couponBill;
+					document.getElementById("where_to_add_msg").innerHTML="Applying wrong coupon!! Please check.";
+					document.getElementById("where_to_add_msg").style.color = "red";
+				}
+				document.getElementById("usercoupon").value = "";
+				document.getElementById("usercoupon").style.display = "none";
+				document.getElementById("where_to_add_msg").style.display = "block";
+				document.getElementById("totalbill").innerHTML = "Total Bill :: $" + updatedBill.toFixed(2);
+			} else if(p == 1){
+				document.getElementById("applyCoupon").value = "Apply";
+				document.getElementById("applyCoupon").style.color = "white";
+				document.getElementById("totalbill").innerHTML = "Total Bill :: $" + ultimateBill.toFixed(2);
+				document.getElementById("applyCoupon").disabled = true;
+				document.getElementById("usercoupon").style.display = "block";
+				document.getElementById("where_to_add_msg").style.display = "none";
+			}
+		}
+	
+	//~~~~~~~~~~~~~~~~~~~~~~~~~Script to check passwords are same or not at the time of registration~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+		function pwdFunction() {
+			var pwd = document.getElementById("reg_pwd").value;
+			var cpwd = document.getElementById("creg_pwd").value;
+			if (pwd == cpwd) {
+				document.getElementById('rg_submit').disabled = false;
+			} else {
+				window.alert("Passwords are not same.Check again");
+				document.getElementById('rg_submit').disabled = true;
+			}
+		}
+		
+		// function valid(e) {
+		// 	console.log("called");
+		// 	var RegExp = new RegExp("\d+");
+		// 	var val = document.getElementById("i"+e).value;
+		// 	console.log(val); 
+        //     if (!RegExp.test(val)) { 
+        //         document.getElementById("i"+e).value = 1;                
+        //     }
+		// }
+		function myFunction(e){
+			// if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+			// {
+			// 	evt.preventDefault();
+			// }
+			document.querySelector("#i"+e).addEventListener("keypress", function (evt) {
+			//console.log("called");
+			if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+				evt.preventDefault();
+			});
+		}
+					
+	</script>
+
+</body>
+
+</html>
